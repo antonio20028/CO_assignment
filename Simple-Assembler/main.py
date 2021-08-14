@@ -1,7 +1,7 @@
 import sys
 
 regs = ["R0", "R1", "R2", "R3", "R4", "R5", "R6"]
-mem_addrs = ["[R0]", "[R1]", "[R3]", "[R3]", "[R4]", "[R5]", "[R6]"]
+mem_addrs = ["[R0]", "[R1]", "[R2]", "[R3]", "[R4]", "[R5]", "[R6]"]
 
 type_A = ["add", "sub", "mul", "xor", "or", "and"]
 type_B = ["mov", "rs", "ls"]
