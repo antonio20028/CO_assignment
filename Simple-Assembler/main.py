@@ -42,7 +42,7 @@ def argumentsError(args):
 
 def immediateError(imm):
     errors.append("%s is not a valid immediate"%imm)
-    
+
     
 def isTypeA(instruction, args):
     if instruction in type_A:
@@ -201,5 +201,6 @@ if __name__ == "__main__":
             else:
                 for err in errors:
                     print(err)
+                    halt()
         else:
            halt()
