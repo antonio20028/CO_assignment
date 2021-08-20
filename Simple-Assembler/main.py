@@ -8,23 +8,28 @@ instructions = [
     {
         "type": "A",
         "instructions": ["add", "sub", "mul", "xor", "or", "and"],
-       }, 
-    
-       {
+        "opcodes": ["00000", "00001", "00110", "01010", "01011", "01100"],}, 
+    {
         "type": "B",
-        "instructions": ["mov", "rs", "ls"]},
-       {
+        "instructions": ["mov", "rs", "ls"],
+        // two types of mov found
+        "opcodes": ["00000", "01000", "01001"],},
+    {
         "type": "C",
-        "instructions": ["div", "not", "cmp"]},
-       {
+        "instructions": ["div", "not", "cmp"],
+        "opcodes": ["00111", "01101", "01110"],},
+    {
         "type": "D",
-        "instructions": ["ld", "st"]},
-       {
+        "instructions": ["ld", "st"],
+        "opcodes": ["001000", "00101"],},
+    {
         "type": "E",
-        "instructions": ["jmp", "jlt", "jgt", "je"]},
-       {
+        "instructions": ["jmp", "jlt", "jgt", "je"],
+        "opcodes": ["01111", "10000", "10001", "10010"],},
+    {
         "type": "F",
         "instructions": ["hlt"]
+        "opcodes": ["10011"],},
      }
     ]
 immediates = ["$%s"%i for i in range(0, 255)]
