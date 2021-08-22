@@ -18,6 +18,9 @@ def mul(reg_1, reg_2):
 def ld (r):
     pass
 
+def move_immediate(reg, immmediate):
+    reg = immmediate
+    
 def st(input):
     pass
 

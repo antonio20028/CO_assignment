@@ -68,7 +68,24 @@ def initialize(single_line):
 
 def exectute(instruction):
 
-    return 0
+    tmp  = list(instruction.keys())
+    opcode = tmp[0]
+
+    reg_address = instruction.get(opcode)[0]
+
+    if opcode in TYPE_A:
+        if opcode == TYPE_A[0]:
+            reg_file[reg_address] = instruction.get(opcode)[1] + instruction.get(opcode)[2]
+    elif opcode in TYPE_B:
+        if opcode == TYPE_B[0]:
+            reg_file[reg_address] = instruction.get(opcode)[1]
+    else:
+        halted = True
+
+
+def update_program_counter(new_pc):
+    program_counter = new_pc
+
 
 def get_register_file():
     for line in reg_file.keys():
@@ -81,10 +98,18 @@ if __name__ == "__main__":
             break
         initialize(line.strip())
 
-    while halted != True:
+    
+    for program_counter in range(len(mem)):
+        exectute(mem[program_counter])
+
+    print(reg_file)
+    # while halted != True:
         
-        instrunction = mem[program_counter]
+    #     instrunction = mem[program_counter]
 
-        program_counter = exectute(instrunction)
+    #     new_pc = exectute(instrunction)
 
-        get_register_file()
+        
+    #     update_program_counter(new_pc)
+    #     print(program_counter)
+    #     # get_register_file()
