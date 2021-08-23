@@ -76,13 +76,27 @@ def exectute(instruction):
 
     if opcode in TYPE_A:
         if opcode == TYPE_A[0]:
-            reg_file[reg_address] = instruction.get(opcode)[1] + instruction.get(opcode)[2]
+            res =  instruction.get(opcode)[1] + instruction.get(opcode)[2]
+            if res < 65535:
+                reg_file[reg_address] = res
+                reg_file[flag] = 0
+            else:
+                reg_file[flag] = 8
         elif opcode == TYPE_A[1]:
-            if instruction.get(opcode)[1] > instruction.get(opcode)[2]:
-                reg_file[reg_address] = instruction.get(opcode)[1] - instruction.get(opcode)[2]
-            flag = "1"
+            res = instruction.get(opcode)[1] - instruction.get(opcode)[2]
+            if res > 0:
+                reg_file[reg_address] = res
+                reg_file[flag] = 0
+            else:
+                reg_file[flag] = 8
         elif opcode == TYPE_A[2]:
-            reg_file[reg_address] = instruction.get(opcode)[1] * instruction.get(opcode)[2]
+                res = instruction.get(opcode)[1] * instruction.get(opcode)[2]
+                if res < 65535:
+                    reg_file[reg_address] = res
+                    reg_file[flag] = 0
+                else:
+                    reg_file[flag] = 8
+
         elif opcode == TYPE_A[3]:
             reg_file[reg_address] = instruction.get(opcode)[1] ^ instruction.get(opcode)[2]
         elif opcode == TYPE_A[3]:
@@ -105,6 +119,13 @@ def exectute(instruction):
             reg_file[reg_address] = instruction.get(opcode)[1]
         elif opcode == TYPE_C[1]:
             reg_file[reg_address] = ~(instruction.get(opcode)[1])
+        elif opcode == TYPE_C[2]:
+            if instruction.get(opcode)[0] < instruction.get(opcode)[1]:
+                reg_file[flag] = 4
+            elif instruction.get(opcode)[0] > instruction.get(opcode)[1]:
+                reg_file[flag] = 2
+            else:
+                reg_file[flag] = 1
     elif opcode in TYPE_D:
         if opcode == TYPE_D[0]:
             reg_file[reg_address] = reg_file[instruction.get(opcode)[1]]
