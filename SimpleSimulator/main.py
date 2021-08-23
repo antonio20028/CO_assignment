@@ -134,8 +134,8 @@ if __name__ == "__main__":
         program_counter = i
         exectute(mem[program_counter])
 
-    print(program_counter)
-    print(reg_file)
+    sys.stdout.write(program_counter)
+    sys.stdout.write(reg_file)
     # while halted != True:
         
     #     instrunction = mem[program_counter]
