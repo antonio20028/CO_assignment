@@ -28,6 +28,9 @@ def get_binary(value, width):
     res = bin(value)
     return res[2:].zfill(width)
 
+def get_decimal(value):
+    return int(value, 2)
+
 def initialize(single_line):
     opcode = single_line[:5]
     reg = []
@@ -76,53 +79,52 @@ def exectute(instruction):
 
     if opcode in TYPE_A:
         if opcode == TYPE_A[0]:
-            res =  instruction.get(opcode)[1] + instruction.get(opcode)[2]
+            res =  reg_file[instruction.get(opcode)[1]] + reg_file[instruction.get(opcode)[2]]
             if res < 65535:
                 reg_file[reg_address] = res
                 reg_file[flag] = 0
             else:
                 reg_file[flag] = 8
         elif opcode == TYPE_A[1]:
-            res = instruction.get(opcode)[1] - instruction.get(opcode)[2]
+            res = reg_file[instruction.get(opcode)[1]] - reg_file[instruction.get(opcode)[2]]
             if res > 0:
                 reg_file[reg_address] = res
                 reg_file[flag] = 0
             else:
                 reg_file[flag] = 8
         elif opcode == TYPE_A[2]:
-                res = instruction.get(opcode)[1] * instruction.get(opcode)[2]
+                res = reg_file[instruction.get(opcode)[1]] * reg_file[instruction.get(opcode)[2]]
                 if res < 65535:
                     reg_file[reg_address] = res
                     reg_file[flag] = 0
                 else:
                     reg_file[flag] = 8
-
         elif opcode == TYPE_A[3]:
-            reg_file[reg_address] = instruction.get(opcode)[1] ^ instruction.get(opcode)[2]
+            reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] ^ reg_file[instruction.get(opcode)[2]]
         elif opcode == TYPE_A[3]:
-            reg_file[reg_address] = instruction.get(opcode)[1] | instruction.get(opcode)[2]
+            reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] | reg_file[instruction.get(opcode)[2]]
         elif opcode == TYPE_A[4]:
-            reg_file[reg_address] = instruction.get(opcode)[1] & instruction.get(opcode)[2]
+            reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] & reg_file[instruction.get(opcode)[2]]
     elif opcode in TYPE_B:
         if opcode == TYPE_B[0]:
-            reg_file[reg_address] = instruction.get(opcode)[1]
+            reg_file[reg_address] = get_decimal(reg_file[instruction.get(opcode)[1]])
         elif opcode == TYPE_B[1]:
-            reg_file[reg_address] = reg_file[reg_address] >> instruction.get(opcode)[1]
+            reg_file[reg_address] = reg_file[reg_address] >> get_decimal(get_file[instruction.get(opcode)[1]])
         elif opcode == TYPE_B[2]:
-            reg_file[reg_address] = reg_file[reg_address] << instruction.get(opcode)[1]
+            reg_file[reg_address] = reg_file[reg_address] << get_decimal(get_file[instruction.get(opcode)[1]])
     elif opcode in TYPE_C:
         if opcode == TYPE_C[0]:
-            if instruction.get(opcode)[1] > 0:
-                reg_file["000"] = reg_address / instruction.get(opcode)[1]
-                reg_file["001"] = reg_address % instruction.get(opcode)[1]
+            if reg_file[instruction.get(opcode)[1]] > 0:
+                reg_file["000"] = reg_file[reg_address] / reg_file[instruction.get(opcode)[1]]
+                reg_file["001"] = reg_file[reg_address] % reg_file[instruction.get(opcode)[1]]
         elif opcode == TYPE_C[3]:
-            reg_file[reg_address] = instruction.get(opcode)[1]
+            reg_file[reg_address] = reg_file[instruction.get(opcode)[1]]
         elif opcode == TYPE_C[1]:
-            reg_file[reg_address] = ~(instruction.get(opcode)[1])
+            reg_file[reg_address] = ~(reg_file[instruction.get(opcode)[1]])
         elif opcode == TYPE_C[2]:
-            if instruction.get(opcode)[0] < instruction.get(opcode)[1]:
+            if reg_file[instruction.get(opcode)[0]] < reg_file[instruction.get(opcode)[1]]:
                 reg_file[flag] = 4
-            elif instruction.get(opcode)[0] > instruction.get(opcode)[1]:
+            elif reg_file[instruction.get(opcode)[0]] > reg_file[instruction.get(opcode)[1]]:
                 reg_file[flag] = 2
             else:
                 reg_file[flag] = 1
@@ -131,6 +133,18 @@ def exectute(instruction):
             reg_file[reg_address] = reg_file[instruction.get(opcode)[1]]
         elif opcode == TYPE_D[1]:
             reg_file[instruction.get(opcode)[1]] = reg_file[reg_address]
+    elif opcode in TYPE_E:
+        if opcode == TYPE_E[0]:
+            program_counter = get_decimal(reg_file[reg_address])
+        elif opcode == TYPE[1]:
+            if reg_file[flag] == 4:
+                program_counter = get_decimal(reg_file[reg_address])
+        elif opcode == TYPE[2]:
+            if reg_file[flag] == 2:
+                program_counter = get_decimal(reg_file[reg_adress])
+        elif opcode == TYPE[3]:
+            if reg_file[flag] == 1:
+                program_counter = get_decimal(reg_file[reg_address])
     else:
         halted = True
 
@@ -155,8 +169,8 @@ if __name__ == "__main__":
         program_counter = i
         exectute(mem[program_counter])
 
-    sys.stdout.write(program_counter)
-    sys.stdout.write(reg_file)
+    print(get_binary(program_counter))
+    print(reg_file)
     # while halted != True:
         
     #     instrunction = mem[program_counter]
