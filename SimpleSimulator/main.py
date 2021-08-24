@@ -78,7 +78,7 @@ def exectute(instruction):
     reg_address = instruction.get(opcode)[0]
 
     if opcode in TYPE_A:
-        if opcode == TYPE_A[0]:
+        if opcode == TYPE_A[0]: #addition
             res =  reg_file[instruction.get(opcode)[1]] + reg_file[instruction.get(opcode)[2]]
             if res < 65535:
                 reg_file[reg_address] = res
@@ -101,9 +101,9 @@ def exectute(instruction):
                     reg_file[flag] = 8
         elif opcode == TYPE_A[3]:
             reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] ^ reg_file[instruction.get(opcode)[2]]
-        elif opcode == TYPE_A[3]:
-            reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] | reg_file[instruction.get(opcode)[2]]
         elif opcode == TYPE_A[4]:
+            reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] | reg_file[instruction.get(opcode)[2]]
+        elif opcode == TYPE_A[5]:
             reg_file[reg_address] = reg_file[instruction.get(opcode)[1]] & reg_file[instruction.get(opcode)[2]]
     elif opcode in TYPE_B:
         if opcode == TYPE_B[0]:
