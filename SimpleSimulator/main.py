@@ -136,13 +136,13 @@ def exectute(instruction):
     elif opcode in TYPE_E:
         if opcode == TYPE_E[0]:
             program_counter = get_decimal(reg_file[reg_address])
-        elif opcode == TYPE[1]:
+        elif opcode == TYPE_E[1]:
             if reg_file[flag] == 4:
                 program_counter = get_decimal(reg_file[reg_address])
-        elif opcode == TYPE[2]:
+        elif opcode == TYPE_E[2]:
             if reg_file[flag] == 2:
-                program_counter = get_decimal(reg_file[reg_adress])
-        elif opcode == TYPE[3]:
+                program_counter = get_decimal(reg_file[reg_address])
+        elif opcode == TYPE_E[3]:
             if reg_file[flag] == 1:
                 program_counter = get_decimal(reg_file[reg_address])
     else:
