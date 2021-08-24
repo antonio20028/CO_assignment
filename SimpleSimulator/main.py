@@ -109,9 +109,9 @@ def exectute(instruction):
         if opcode == TYPE_B[0]:
             reg_file[reg_address] = get_decimal(reg_file[instruction.get(opcode)[1]])
         elif opcode == TYPE_B[1]:
-            reg_file[reg_address] = reg_file[reg_address] >> get_decimal(get_file[instruction.get(opcode)[1]])
+            reg_file[reg_address] = reg_file[reg_address] >> get_decimal(reg_file[instruction.get(opcode)[1]])
         elif opcode == TYPE_B[2]:
-            reg_file[reg_address] = reg_file[reg_address] << get_decimal(get_file[instruction.get(opcode)[1]])
+            reg_file[reg_address] = reg_file[reg_address] << get_decimal(reg_file[instruction.get(opcode)[1]])
     elif opcode in TYPE_C:
         if opcode == TYPE_C[0]:
             if reg_file[instruction.get(opcode)[1]] > 0:
